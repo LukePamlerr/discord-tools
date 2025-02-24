@@ -5,34 +5,34 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    --background: 325 100% 98%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --primary: 325 95% 65%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
+    --secondary: 325 30% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 325 30% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
+    --accent: 325 30% 95.9%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.75rem;
+    --border: 325 5.9% 90%;
+    --input: 325 5.9% 90%;
+    --ring: 325 95% 65%;
+    --radius: 1rem;
   }
 
   * {
-    @apply border-border selection:bg-black/5;
+    @apply border-border selection:bg-pink-100;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background bg-[url('https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?q=80&w=2532&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-fixed bg-cover bg-center bg-no-repeat text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
 
@@ -51,7 +51,7 @@
 }
 
 .glass-card {
-  @apply rounded-lg border border-black/5 bg-white/80 shadow-lg shadow-black/5 backdrop-blur-lg transition-all duration-300;
+  @apply rounded-2xl border border-white/20 bg-white/90 shadow-xl shadow-pink-500/5 backdrop-blur-xl transition-all duration-300;
 }
 
 .hover-scale {
@@ -65,4 +65,35 @@
 
 .embed-preview {
   @apply rounded-lg border-l-4 p-4 transition-all duration-300;
+}
+
+/* Cute decorative elements */
+.sparkles::before,
+.sparkles::after {
+  content: "✨";
+  @apply absolute -top-2 text-pink-400 opacity-75;
+  animation: float 3s ease-in-out infinite;
+}
+
+.sparkles::before {
+  @apply -left-2;
+  animation-delay: 0.5s;
+}
+
+.sparkles::after {
+  @apply -right-2;
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.hero-title {
+  @apply bg-gradient-to-r from-pink-400 to-purple-600 bg-clip-text text-transparent;
 }
