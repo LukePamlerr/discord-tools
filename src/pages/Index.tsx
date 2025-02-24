@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { PlusCircle, Copy, Send, Heart, Sparkles } from "lucide-react";
+import { PlusCircle, Copy, Send, Heart, Sparkles, MessagesSquare, ImageIcon, Bot, Settings } from "lucide-react";
 import { EmbedField } from "@/components/EmbedField";
 import { EmbedPreview } from "@/components/EmbedPreview";
 
@@ -33,13 +34,48 @@ interface Embed {
   }>;
 }
 
+const TOOLS = [
+  {
+    id: "embed-builder",
+    name: "Embed Builder",
+    description: "Create beautiful Discord webhook embeds with live preview",
+    icon: MessagesSquare,
+    color: "from-pink-400 to-purple-600",
+    comingSoon: false,
+  },
+  {
+    id: "image-tools",
+    name: "Image Tools",
+    description: "Optimize and resize images for Discord attachments",
+    icon: ImageIcon,
+    color: "from-blue-400 to-cyan-600",
+    comingSoon: true,
+  },
+  {
+    id: "bot-commands",
+    name: "Bot Commands",
+    description: "Generate and test Discord bot commands",
+    icon: Bot,
+    color: "from-green-400 to-emerald-600",
+    comingSoon: true,
+  },
+  {
+    id: "server-settings",
+    name: "Server Settings",
+    description: "Manage and optimize your Discord server settings",
+    icon: Settings,
+    color: "from-orange-400 to-red-600",
+    comingSoon: true,
+  },
+];
+
 const Index = () => {
   const { toast } = useToast();
   const [webhookUrl, setWebhookUrl] = useState("");
   const [embed, setEmbed] = useState<Embed>({
     fields: [],
   });
-  const [showBuilder, setShowBuilder] = useState(false);
+  const [selectedTool, setSelectedTool] = useState<string | null>(null);
 
   const handleFieldChange = (
     index: number,
@@ -110,68 +146,55 @@ const Index = () => {
     }
   };
 
-  if (!showBuilder) {
+  if (!selectedTool) {
     return (
       <div className="container mx-auto min-h-screen space-y-12 py-16 text-center">
         <div className="relative space-y-4">
           <h1 className="hero-title relative text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-            <span className="sparkles">Discord Embed Builder</span>
+            <span className="sparkles">Discord Tools</span>
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Create beautiful Discord webhook embeds with our easy-to-use builder. Preview your embeds in real-time and send them directly to your server! ✨
+            A collection of beautiful and useful tools to enhance your Discord server. Choose a tool to get started! ✨
           </p>
-          <Button 
-            size="lg" 
-            onClick={() => setShowBuilder(true)}
-            className="mt-8 gap-2 rounded-full bg-gradient-to-r from-pink-400 to-purple-600 px-8 text-white hover:opacity-90"
-          >
-            <Heart className="h-5 w-5" />
-            Start Creating
-          </Button>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {[
-            {
-              icon: "✨",
-              title: "Beautiful Design",
-              description: "Create stunning embeds that stand out in your Discord server",
-            },
-            {
-              icon: "👀",
-              title: "Live Preview",
-              description: "See your changes in real-time as you build your perfect embed",
-            },
-            {
-              icon: "🚀",
-              title: "Instant Deploy",
-              description: "Send your embed directly to Discord with one click",
-            },
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="glass-card hover-scale space-y-4 p-6"
+        <div className="grid gap-6 md:grid-cols-2">
+          {TOOLS.map((tool) => (
+            <button
+              key={tool.id}
+              onClick={() => !tool.comingSoon && setSelectedTool(tool.id)}
+              className="glass-card hover-scale group relative overflow-hidden p-6 text-left"
+              disabled={tool.comingSoon}
             >
-              <div className="text-4xl">{feature.icon}</div>
-              <h3 className="text-xl font-semibold">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
-            </div>
+              {tool.comingSoon && (
+                <div className="absolute right-2 top-2 rounded-full bg-pink-100 px-2 py-1 text-xs font-medium text-pink-600">
+                  Coming Soon
+                </div>
+              )}
+              <div className={`mb-4 inline-flex rounded-xl bg-gradient-to-r ${tool.color} p-3 text-white`}>
+                <tool.icon className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-semibold">{tool.name}</h3>
+              <p className="mt-2 text-muted-foreground">{tool.description}</p>
+            </button>
           ))}
         </div>
 
         <div className="glass-card mx-auto max-w-3xl p-8">
           <div className="space-y-4">
             <Sparkles className="h-8 w-8 text-pink-400" />
-            <h2 className="text-2xl font-bold">Ready to get started?</h2>
+            <h2 className="text-2xl font-bold">More tools coming soon!</h2>
             <p className="text-muted-foreground">
-              Create beautiful embeds for your Discord server in minutes. No coding required!
+              We're working hard to bring you more useful tools for your Discord server.
+              Stay tuned for updates! ✨
             </p>
             <Button
-              onClick={() => setShowBuilder(true)}
               variant="secondary"
               className="mt-4"
+              onClick={() => setSelectedTool("embed-builder")}
             >
-              Create Your First Embed
+              <Heart className="mr-2 h-4 w-4" />
+              Try Embed Builder
             </Button>
           </div>
         </div>
@@ -179,15 +202,16 @@ const Index = () => {
     );
   }
 
+  // Only show embed builder for now, other tools coming soon
   return (
     <div className="container mx-auto space-y-8 py-8">
       <div className="text-center">
         <Button
           variant="ghost"
-          onClick={() => setShowBuilder(false)}
+          onClick={() => setSelectedTool(null)}
           className="mb-8"
         >
-          ← Back to Home
+          ← Back to Tools
         </Button>
         <h1 className="hero-title relative text-4xl font-bold tracking-tight">
           <span className="sparkles">Embed Builder</span>
