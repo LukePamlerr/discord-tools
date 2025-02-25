@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { PlusCircle, Copy, Send, Heart, Sparkles, MessagesSquare, ImageIcon, Bot, Settings } from "lucide-react";
+import { PlusCircle, Copy, Send, Heart, Sparkles, MessagesSquare, ImageIcon, Bot, Settings, Shield, Users, Sliders } from "lucide-react";
 import { EmbedField } from "@/components/EmbedField";
 import { EmbedPreview } from "@/components/EmbedPreview";
 import { ImageTools } from "@/components/ImageTools";
@@ -58,7 +58,7 @@ const TOOLS = [
     description: "Generate and test Discord bot commands",
     icon: Bot,
     color: "from-green-400 to-emerald-600",
-    comingSoon: true,
+    comingSoon: false,
   },
   {
     id: "server-settings",
@@ -68,6 +68,46 @@ const TOOLS = [
     color: "from-orange-400 to-red-600",
     comingSoon: false,
   },
+  {
+    id: "role-manager",
+    name: "Role Manager",
+    description: "Advanced role hierarchy and permission management",
+    icon: Users,
+    color: "from-violet-400 to-purple-600",
+    comingSoon: true,
+  },
+  {
+    id: "auto-mod",
+    name: "Auto Moderator",
+    description: "AI-powered content moderation and filtering",
+    icon: Shield,
+    color: "from-indigo-400 to-blue-600",
+    comingSoon: true,
+  },
+  {
+    id: "channel-analytics",
+    name: "Channel Analytics",
+    description: "Advanced insights and activity tracking",
+    icon: Sliders,
+    color: "from-cyan-400 to-teal-600",
+    comingSoon: true,
+  },
+  {
+    id: "backup-tools",
+    name: "Backup Tools",
+    description: "Server backup and restore utilities",
+    icon: Bot,
+    color: "from-emerald-400 to-green-600",
+    comingSoon: true,
+  },
+  {
+    id: "webhook-manager",
+    name: "Webhook Manager",
+    description: "Advanced webhook creation and management",
+    icon: MessageSquare,
+    color: "from-rose-400 to-pink-600",
+    comingSoon: true,
+  }
 ];
 
 const Index = () => {
@@ -422,6 +462,16 @@ const Index = () => {
       return <ImageTools />;
     case "server-settings":
       return <ServerSettings />;
+    case "role-manager":
+      return <div>Role Manager Tool Coming Soon!</div>;
+    case "auto-mod":
+      return <div>Auto Moderator Tool Coming Soon!</div>;
+    case "channel-analytics":
+      return <div>Channel Analytics Tool Coming Soon!</div>;
+    case "backup-tools":
+      return <div>Backup Tools Coming Soon!</div>;
+    case "webhook-manager":
+      return <div>Webhook Manager Coming Soon!</div>;
     default:
       return null;
   }
