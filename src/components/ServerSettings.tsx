@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,7 +43,7 @@ interface ServerSetting {
   type: "switch" | "select" | "input" | "textarea";
   options?: string[];
   value: any;
-  category: "moderation" | "chat" | "roles" | "notifications";
+  category: "moderation" | "chat" | "roles" | "notifications" | "advanced" | "integrations";
   icon: any;
 }
 
@@ -128,6 +127,54 @@ export const ServerSettings = () => {
       value: "Only @mentions",
       category: "notifications",
       icon: Bell,
+    },
+    {
+      id: "rate_limiting",
+      name: "Rate Limiting",
+      description: "Configure message rate limits per user",
+      type: "select",
+      options: ["Off", "Low (10/min)", "Medium (5/min)", "High (2/min)", "Custom"],
+      value: "Medium (5/min)",
+      category: "advanced",
+      icon: AlertTriangle,
+    },
+    {
+      id: "analytics_enabled",
+      name: "Server Analytics",
+      description: "Track server activity and member engagement",
+      type: "switch",
+      value: false,
+      category: "integrations",
+      icon: Sliders,
+    },
+    {
+      id: "join_requirements",
+      name: "Join Requirements",
+      description: "Set minimum account age and verification",
+      type: "select",
+      options: ["None", "Email Verified", "Phone Verified", "2FA Required"],
+      value: "Email Verified",
+      category: "moderation",
+      icon: BadgeCheck,
+    },
+    {
+      id: "auto_responses",
+      name: "Auto Responses",
+      description: "Configure automatic replies to common phrases",
+      type: "textarea",
+      value: "!help -> Shows server commands\n!rules -> Displays server rules",
+      category: "chat",
+      icon: MessagesSquare,
+    },
+    {
+      id: "raid_protection",
+      name: "Anti-Raid Mode",
+      description: "Advanced protection against server raids",
+      type: "select",
+      options: ["Disabled", "Basic", "Moderate", "Aggressive"],
+      value: "Moderate",
+      category: "moderation",
+      icon: ShieldAlert,
     }
   ]);
 
@@ -187,6 +234,18 @@ export const ServerSettings = () => {
       icon: Bell,
       color: "from-green-400 to-emerald-600",
     },
+    advanced: {
+      title: "Advanced Settings",
+      description: "Fine-tune advanced server configurations",
+      icon: Sliders,
+      color: "from-yellow-400 to-amber-600",
+    },
+    integrations: {
+      title: "Integrations",
+      description: "Manage server integrations and analytics",
+      icon: Bot,
+      color: "from-indigo-400 to-violet-600",
+    },
   };
 
   return (
@@ -223,7 +282,7 @@ export const ServerSettings = () => {
         </Button>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
         {Object.entries(categories).map(([key, category]) => (
           <Card key={key} className="glass-card">
             <CardHeader>
