@@ -8,6 +8,7 @@ import { PlusCircle, Copy, Send, Heart, Sparkles, MessagesSquare, ImageIcon, Bot
 import { EmbedField } from "@/components/EmbedField";
 import { EmbedPreview } from "@/components/EmbedPreview";
 import { ImageTools } from "@/components/ImageTools";
+import { ServerSettings } from "@/components/ServerSettings";
 
 interface Embed {
   title?: string;
@@ -49,7 +50,7 @@ const TOOLS = [
     description: "Optimize and resize images for Discord attachments",
     icon: ImageIcon,
     color: "from-blue-400 to-cyan-600",
-    comingSoon: false, // Changed to false since it's now implemented
+    comingSoon: false,
   },
   {
     id: "bot-commands",
@@ -65,7 +66,7 @@ const TOOLS = [
     description: "Manage and optimize your Discord server settings",
     icon: Settings,
     color: "from-orange-400 to-red-600",
-    comingSoon: true,
+    comingSoon: false,
   },
 ];
 
@@ -202,7 +203,6 @@ const Index = () => {
     );
   }
 
-  // Show selected tool
   switch (selectedTool) {
     case "embed-builder":
       return (
@@ -420,6 +420,8 @@ const Index = () => {
       );
     case "image-tools":
       return <ImageTools />;
+    case "server-settings":
+      return <ServerSettings />;
     default:
       return null;
   }
